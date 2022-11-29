@@ -96,6 +96,7 @@ pygame.display.update()
 
 game = True
 while game:
+    time.sleep(0.7)
 
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
