@@ -6,6 +6,7 @@ tempo = pygame.time.Clock()
 
 texto_inicio_fonte = pygame.font.SysFont('Arial', 80)
 placar_fonte= pygame.font.SysFont("Arial", 28)
+options_fonte = pygame.font.SysFont('Arial', 40)                  # Fonte para as opções
 
 tela_inicial = pygame.display.set_mode((500, 530), 0, 32)           # Janela
 pygame.display.set_caption("DOC")                            # Titulo da janela
@@ -106,6 +107,28 @@ def check_Resposta(resp_player, lista_seq):
     else:
         return False
 
+# Função para jogar novamente
+def playAgain():
+    play_again = options_fonte.render('Jogar Novamente', True, (0, 0, 0))  # Texto do botao jogar novamete
+
+    while True:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                quit()
+            if evento.type == MOUSEBUTTONDOWN:
+                mouse = pygame.mouse.get_pos()
+                if play_again_btn.collidepoint(mouse):
+                    tela_inicial.blit(tela_jogo, (0, 30))
+                    pygame.display.update()
+                    return True
+                else:
+                    return False
+
+        tela_inicial.blit(tela_jogo, (0, 30))
+        play_again_btn = pygame.draw.rect(tela_inicial, (255, 89, 89), (122, 80, 270, 50))  # Desenha botao
+        tela_inicial.blit(play_again, (130, 80))               # Desenha texto no botao
+        pygame.display.update()
+
 while not game:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -125,7 +148,7 @@ while not game:
 tela_inicial.blit(tela_jogo, (0, 30))
 pygame.display.update()
 
-game = True
+
 while game:
     time.sleep(1)
     tela_inicial.fill((0,0,0))
@@ -160,7 +183,15 @@ while game:
         
         
     else:
-        game=False
+        game=playAgain()
+
+
+        if game:
+            pontos=0
+            seq_colors=[]
+        else:
+            if evento.type == pygame.QUIT:
+                game = False    
     
     
     
