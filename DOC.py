@@ -5,6 +5,7 @@ pygame.init()
 tempo = pygame.time.Clock()
 
 texto_inicio_fonte = pygame.font.SysFont('Arial', 80)
+placar_fonte= pygame.font.SysFont("Arial", 28)
 
 tela_inicial = pygame.display.set_mode((500, 530), 0, 32)           # Janela
 pygame.display.set_caption("DOC")                            # Titulo da janela
@@ -26,6 +27,8 @@ amarelo = pygame.draw.polygon(tela_inicial, AMARELO, ((409, 315), (263, 315), (2
 vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (230, 495)))
 azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
 
+
+
 texto_comeco = texto_inicio_fonte.render('Jogar', True, (255, 255, 255))   # Texto do botao começar
 
 def choose_color():
@@ -39,6 +42,15 @@ def choose_color():
 
 
 def blinkColors(list_colors):
+    # Desenhando o score
+
+    text_placar = placar_fonte.render("{0}".format(pontos), True, (255, 255, 0))
+    text_rect = text_placar.get_rect()
+
+    text_rect.midtop = (250,  0)
+
+    tela_inicial.blit(text_placar, text_rect)
+
     for color in list_colors:
         
         pygame.draw.polygon(tela_inicial, color['cor'], color['posicao'])
@@ -48,10 +60,11 @@ def blinkColors(list_colors):
         tela_inicial.blit(tela_jogo, (0, 30))
         pygame.display.update()
         time.sleep(0.3)
-
+        
 
 game = False
 seq_colors = []
+pontos = 0
 
 # Aguarda a resposta do jogador e retorna a resposta
 def Resposta(qnt_color):
@@ -114,7 +127,11 @@ pygame.display.update()
 
 game = True
 while game:
-    time.sleep(0.7)
+    time.sleep(1)
+    tela_inicial.fill((0,0,0))
+    tela_inicial.blit(tela_jogo, (0, 30))
+    
+    
 
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -122,17 +139,32 @@ while game:
 
     seq_colors.append(choose_color())              # Escolhe uma cor e adiciona a lista de sequencia
     blinkColors(seq_colors)
+    # Desenhando o score
+
+    text_placar = placar_fonte.render("{0}".format(pontos), True, (255, 255, 0))
+    text_rect = text_placar.get_rect()
+
+    text_rect.midtop = (250,  0)
+
+    tela_inicial.blit(text_placar, text_rect)
+    pygame.display.update()    
+
+
+    
 
     resposta_jogador = Resposta(len(seq_colors))    # Aguarda a resposta do jogador
 
     if check_Resposta(resposta_jogador, seq_colors):
-        continue
+        pontos = pontos + 1
+       
+        
+        
     else:
-        game=False          
-
+        game=False
     
     
-    pygame.display.update()
+    
+    
 
 
        
