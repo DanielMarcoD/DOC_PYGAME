@@ -4,6 +4,8 @@ from pygame.locals import *
 pygame.init()
 tempo = pygame.time.Clock()
 
+texto_inicio_fonte = pygame.font.SysFont('Arial', 80)
+
 tela_inicial = pygame.display.set_mode((500, 530), 0, 32)           # Janela
 pygame.display.set_caption("DOC")                            # Titulo da janela
 tela_icone = pygame.image.load('assets/logo2.png')                       # Imagem do icone do jogo
@@ -24,6 +26,7 @@ amarelo = pygame.draw.polygon(tela_inicial, AMARELO, ((409, 315), (263, 315), (2
 vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (230, 495)))
 azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
 
+texto_comeco = texto_inicio_fonte.render('Jogar', True, (255, 255, 255))   # Texto do botao começar
 
 def choose_color():
     verde_light = {'cor': VERDE, 'posicao': ((81, 317), (230, 317), (230, 169))}
@@ -90,6 +93,21 @@ def check_Resposta(resp_player, lista_seq):
     else:
         return False
 
+while not game:
+    for evento in pygame.event.get():
+        if evento.type == QUIT:
+            quit()
+        if evento.type == MOUSEBUTTONDOWN:
+            mouse = pygame.mouse.get_pos()
+            if btn_play.collidepoint(mouse):
+                game = True
+
+    tela_inicial.blit(tela_de_fundo, (0, 30))
+    
+    btn_play = pygame.draw.rect(tela_inicial, (0, 0, 0), (115, 370, 270, 100))  # Desenha botao
+    tela_inicial.blit(texto_comeco, (172, 365))
+    pygame.display.update()
+    tempo.tick(27)
 
 tela_inicial.blit(tela_jogo, (0, 30))
 pygame.display.update()
