@@ -95,7 +95,7 @@ def check_Resposta(resp_player, lista_seq):
 
 while not game:
     for evento in pygame.event.get():
-        if evento.type == QUIT:
+        if evento.type == pygame.QUIT:
             quit()
         if evento.type == MOUSEBUTTONDOWN:
             mouse = pygame.mouse.get_pos()
