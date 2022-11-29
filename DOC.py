@@ -1,4 +1,5 @@
 import pygame,random,time
+from pygame.locals import *
 
 pygame.init()
 tempo = pygame.time.Clock()
@@ -43,10 +44,52 @@ def blinkColors(list_colors):
 
         tela_inicial.blit(tela_jogo, (0, 30))
         pygame.display.update()
-        time.sleep(0.3) 
+        time.sleep(0.3)
+
 
 game = False
-seq_colors = [] 
+seq_colors = []
+
+# Aguarda a resposta do jogador e retorna a resposta
+def Resposta(qnt_color):
+    user_guess = []
+
+    while 1 <= qnt_color:
+        for ocorrencia in pygame.event.get():
+            if ocorrencia.type == pygame.QUIT:
+                quit()
+            if ocorrencia.type == MOUSEBUTTONDOWN:
+                mouse = pygame.mouse.get_pos()
+                if verde.collidepoint(mouse):
+                    
+                    user_guess.append(VERDE)
+                    qnt_color -= 1
+                elif amarelo.collidepoint(mouse):
+                    
+                    user_guess.append(AMARELO)
+                    qnt_color -= 1
+                elif vermelha.collidepoint(mouse):
+                   
+                    user_guess.append(VERMELHO)
+                    qnt_color -= 1
+                elif azul.collidepoint(mouse):
+                    
+                    user_guess.append(AZUL)
+                    qnt_color -= 1
+                
+    return user_guess
+
+
+def check_Resposta(resp_player, lista_seq):
+    seq_colors = []
+    for cor in lista_seq:
+        seq_colors.append(cor['cor'])
+
+    if resp_player == seq_colors:
+        return True
+    else:
+        return False
+
 
 tela_inicial.blit(tela_jogo, (0, 30))
 pygame.display.update()
@@ -59,7 +102,14 @@ while game:
             game= False
 
     seq_colors.append(choose_color())              # Escolhe uma cor e adiciona a lista de sequencia
-    blinkColors(seq_colors)        
+    blinkColors(seq_colors)
+
+    resposta_jogador = Resposta(len(seq_colors))    # Aguarda a resposta do jogador
+
+    if check_Resposta(resposta_jogador, seq_colors):
+        continue
+    else:
+        game=False          
 
     
     
