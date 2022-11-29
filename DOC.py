@@ -22,6 +22,13 @@ amarelo = pygame.draw.polygon(tela_inicial, AMARELO, ((409, 315), (263, 315), (2
 vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (230, 495)))
 azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
 
+verde_light = {'cor': VERDE, 'posicao': ((81, 317), (230, 317), (230, 169))}
+amarelo_light = {'cor': AMARELO, 'posicao': ((409, 315), (263, 315), (263, 168))}
+azul_light = {'cor': AZUL, 'posicao': ((411, 345), (264, 346), (263, 495))}
+vermelho_light = {'cor': VERMELHO, 'posicao': ((80, 345), (230, 346), (230, 495))}
+
+colors = [verde_light, amarelo_light, vermelho_light, azul_light]
+
 game = False
 
 tela_inicial.blit(tela_jogo, (0, 30))
@@ -34,7 +41,16 @@ while game:
         if evento.type == pygame.QUIT:
             game= False
 
+    verde = pygame.draw.polygon(tela_inicial, VERDE, ((81, 317), (230, 317), (230, 159)))
+    amarelo = pygame.draw.polygon(tela_inicial, AMARELO, ((409, 315), (263, 315), (263, 168)))
+    vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (230, 495)))
+    azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
+    
+    pygame.display.update()
+
+
+       
+
     
 
-    pygame.display.update()
     
