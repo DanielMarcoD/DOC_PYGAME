@@ -29,14 +29,25 @@ vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (
 azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
 
 
+# Sons
+sons = {'som_do': 'sons/do.wav', 'som_re': 'sons/re.wav', 'som_mi': 'sons/mi.wav', 'som_fa': 'sons/fa.wav',
+        'perdeu': 'sons/perdeu_jogo.wav', 'clique': 'sons/clique.wav'}
+
 
 texto_comeco = texto_inicio_fonte.render('Jogar', True, (255, 255, 255))   # Texto do botao começar
 
+# Toca os son
+def play_sound(sound_type):
+    pygame.mixer.music.load(sound_type)
+    pygame.mixer.music.play()
+
+
+
 def choose_color():
-    verde_light = {'cor': VERDE, 'posicao': ((81, 317), (230, 317), (230, 169))}
-    amarelo_light = {'cor': AMARELO, 'posicao': ((409, 315), (263, 315), (263, 168))}
-    azul_light = {'cor': AZUL, 'posicao': ((411, 345), (264, 346), (263, 495))}
-    vermelho_light = {'cor': VERMELHO, 'posicao': ((80, 345), (230, 346), (230, 495))}
+    verde_light = {'cor': VERDE, 'posicao': ((81, 317), (230, 317), (230, 169)), 'som': sons['som_do']}
+    amarelo_light = {'cor': AMARELO, 'posicao': ((409, 315), (263, 315), (263, 168)), 'som': sons['som_fa']}
+    azul_light = {'cor': AZUL, 'posicao': ((411, 345), (264, 346), (263, 495)), 'som': sons['som_mi']}
+    vermelho_light = {'cor': VERMELHO, 'posicao': ((80, 345), (230, 346), (230, 495)), 'som': sons['som_re']}
 
     colors = [verde_light, amarelo_light, vermelho_light, azul_light]
     return random.choice(colors)
@@ -78,21 +89,23 @@ def Resposta(qnt_color):
             if ocorrencia.type == MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 if verde.collidepoint(mouse):
-                    
+                    play_sound(sons['som_do'])
                     user_guess.append(VERDE)
                     qnt_color -= 1
                 elif amarelo.collidepoint(mouse):
-                    
+                    play_sound(sons['som_fa'])
                     user_guess.append(AMARELO)
                     qnt_color -= 1
                 elif vermelha.collidepoint(mouse):
-                   
+                    play_sound(sons['som_re'])
                     user_guess.append(VERMELHO)
                     qnt_color -= 1
                 elif azul.collidepoint(mouse):
-                    
+                    play_sound(sons['som_mi'])
                     user_guess.append(AZUL)
                     qnt_color -= 1
+                else:
+                    play_sound(sons['clique'])    
                 
     return user_guess
 
@@ -183,6 +196,7 @@ while game:
         
         
     else:
+        play_sound(sons['perdeu'])
         game=playAgain()
 
 
