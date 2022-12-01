@@ -4,9 +4,10 @@ from pygame.locals import *
 pygame.init()
 tempo = pygame.time.Clock()
 
+#Fontes
 texto_inicio_fonte = pygame.font.SysFont('Arial', 80)
 placar_fonte= pygame.font.SysFont("Arial", 28)
-options_fonte = pygame.font.SysFont('Arial', 40)                  # Fonte para as opções
+options_fonte = pygame.font.SysFont('Arial', 40)                 
 
 tela_inicial = pygame.display.set_mode((500, 530), 0, 32)           # Janela
 pygame.display.set_caption("DOC")                            # Titulo da janela
@@ -33,16 +34,16 @@ azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 49
 sons = {'som_do': 'sons/do.wav', 'som_re': 'sons/re.wav', 'som_mi': 'sons/mi.wav', 'som_fa': 'sons/fa.wav',
         'perdeu': 'sons/perdeu_jogo.wav', 'clique': 'sons/clique.wav'}
 
-
+#Texto
 texto_comeco = texto_inicio_fonte.render('Jogar', True, (255, 255, 255))   # Texto do botao começar
 
-# Toca os son
+# Toca os sons
 def play_sound(sound_type):
     pygame.mixer.music.load(sound_type)
     pygame.mixer.music.play()
 
 
-
+# Sorteia a cor 
 def choose_color():
     verde_light = {'cor': VERDE, 'posicao': ((81, 317), (230, 317), (230, 169)), 'som': sons['som_do']}
     amarelo_light = {'cor': AMARELO, 'posicao': ((409, 315), (263, 315), (263, 168)), 'som': sons['som_fa']}
@@ -52,7 +53,7 @@ def choose_color():
     colors = [verde_light, amarelo_light, vermelho_light, azul_light]
     return random.choice(colors)
 
-
+# Pisca a cor sorteada
 def blinkColors(list_colors):
     # Desenhando o score
 
@@ -65,7 +66,7 @@ def blinkColors(list_colors):
 
     for color in list_colors:
         
-        pygame.draw.polygon(tela_inicial, color['cor'], color['posicao'])
+        pygame.draw.polygon(tela_inicial, color['cor'], color['posicao'])   # Desenha o polígono da cor que foi sorteada
         pygame.display.update()
         time.sleep(0.3)                                         # Tempo para mostrar a proxima cor
 
@@ -73,9 +74,9 @@ def blinkColors(list_colors):
         pygame.display.update()
         time.sleep(0.3)
         
-
+# Parâmetros iniciais
 game = False
-seq_colors = []
+seq_colors = [] #Sequencia de cores que serão sorteadas
 pontos = 0
 
 # Aguarda a resposta do jogador e retorna a resposta
@@ -109,7 +110,7 @@ def Resposta(qnt_color):
                 
     return user_guess
 
-
+# Checa se a resposta do usuário está correta
 def check_Resposta(resp_player, lista_seq):
     seq_colors = []
     for cor in lista_seq:
@@ -163,7 +164,7 @@ pygame.display.update()
 
 
 while game:
-    time.sleep(1)
+    time.sleep(1) #Tempo para começar a próxima rodada
     tela_inicial.fill((0,0,0))
     tela_inicial.blit(tela_jogo, (0, 30))
     
@@ -174,7 +175,7 @@ while game:
             game= False
 
     seq_colors.append(choose_color())              # Escolhe uma cor e adiciona a lista de sequencia
-    blinkColors(seq_colors)
+    blinkColors(seq_colors)  #Faz piscar as luzes no jogo
     # Desenhando o score
 
     text_placar = placar_fonte.render("{0}".format(pontos), True, (255, 255, 0))
@@ -190,8 +191,8 @@ while game:
 
     resposta_jogador = Resposta(len(seq_colors))    # Aguarda a resposta do jogador
 
-    if check_Resposta(resposta_jogador, seq_colors):
-        pontos = pontos + 1
+    if check_Resposta(resposta_jogador, seq_colors):  # Verifica se a resposta está correta
+        pontos = pontos + 1                           # Pontuação
        
         
         
