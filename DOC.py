@@ -24,10 +24,23 @@ AMARELO = (255, 255, 0)
 AZUL = (50, 190, 255)
 BRANCO = (255, 255, 255)
 
-verde = pygame.draw.polygon(tela_inicial, VERDE, ((81, 317), (230, 317), (230, 159)))
-amarelo = pygame.draw.polygon(tela_inicial, AMARELO, ((409, 315), (263, 315), (263, 168)))
-vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, ((80, 345), (230, 346), (230, 495)))
-azul = pygame.draw.polygon(tela_inicial, AZUL, ((411, 345), (265, 347), (263, 495)))
+triangulo_verde_vertice1 = (81,317)
+triangulo_verde_vertice2 = (230,317)
+triangulo_verde_vertice3 = (230,159)
+triangulo_amarelo_vertice1 = (409,315)
+triangulo_amarelo_vertice2 = (263,315)
+triangulo_amarelo_vertice3 = (263,168)
+triangulo_vermelha_vertice1 = (80,345)
+triangulo_vermelha_vertice2 = (230,346)
+triangulo_vermelha_vertice3 = (230,495)
+triangulo_azul_vertice1 = (411,345)
+triangulo_azul_vertice2 = (265,347)
+triangulo_azul_vertice3 = (263,495)
+
+verde = pygame.draw.polygon(tela_inicial, VERDE, (triangulo_verde_vertice1, triangulo_verde_vertice2, triangulo_verde_vertice3))
+amarelo = pygame.draw.polygon(tela_inicial, AMARELO, (triangulo_amarelo_vertice1, triangulo_amarelo_vertice2, triangulo_amarelo_vertice3))
+vermelha = pygame.draw.polygon(tela_inicial, VERMELHO, (triangulo_vermelha_vertice1, triangulo_vermelha_vertice2, triangulo_vermelha_vertice3))
+azul = pygame.draw.polygon(tela_inicial, AZUL, (triangulo_azul_vertice1, triangulo_azul_vertice2, triangulo_azul_vertice3))
 
 
 # Sons
@@ -52,17 +65,19 @@ def choose_color():
 
     colors = [verde_light, amarelo_light, vermelho_light, azul_light]
     return random.choice(colors)
-
-# Pisca a cor sorteada
-def blinkColors(list_colors):
-    # Desenhando o score
-
+def atualiza_placar():
     text_placar = placar_fonte.render("{0}".format(pontos), True, (255, 255, 0))
     text_rect = text_placar.get_rect()
 
     text_rect.midtop = (250,  0)
 
     tela_inicial.blit(text_placar, text_rect)
+
+
+# Pisca a cor sorteada
+def blinkColors(list_colors):
+    # Desenhando o score
+    atualiza_placar()
 
     for color in list_colors:
         
